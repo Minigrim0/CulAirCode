@@ -1,1 +1,4 @@
 ve/
+.vscode/
+*.pyc
+data/
