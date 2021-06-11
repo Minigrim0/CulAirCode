@@ -1,31 +1,41 @@
+import os
+import time
+
 import cv2
 from pyzbar.pyzbar import decode
 
+from src.media import MediaModel
 
-# Video source - can be camera index number given by 'ls /dev/video*
-# or can be a video file, e.g. '~/Video.avi'
+cv2.namedWindow("frame", cv2.WINDOW_NORMAL)
+cv2.resizeWindow("frame", 1920, 1080)
+cv2.setWindowProperty("frame", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
+
 cap = cv2.VideoCapture(0)
+mediaModel = MediaModel()
+
+startTime = time.time()
+timeElapsed = 0
 
 while True:
-    # Capture frame-by-frame
+    startTime = time.time()
     ret, frame = cap.read()
-    print(decode(frame))
 
-    # Our operations on the frame come here
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    if not mediaModel.update():
 
-    # Display the resulting frame
-    cv2.imshow("frame", gray)
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
+        decoded = decode(frame)
+        if len(decoded) > 0:
+            data = decoded[0].data.decode()
+            position = decoded[0].rect
+
+            if data == "4":
+                mediaModel.loadFolder("data/4")
+
+        cv2.imshow("frame", frame)
+    cv2.waitKey(10)
+
+    timeElapsed = time.time() - startTime
+    mediaModel.limitFrameRate(timeElapsed)
 
 cap.release()
 cv2.destroyAllWindows()
-
-# import cv2
-#
-# camera = cv2.VideoCapture(0)
-# for i in range(10):
-#     return_value, image = camera.read()
-#     cv2.imwrite('opencv'+str(i)+'.png', image)
-# del(camera)
