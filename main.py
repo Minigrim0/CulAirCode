@@ -11,7 +11,7 @@ cv2.resizeWindow("frame", 1920, 1080)
 cv2.setWindowProperty("frame", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 mediaModel = MediaModel()
 
 startTime = time.time()
