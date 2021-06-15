@@ -4,11 +4,44 @@
 #
 #    pip-compile
 #
+certifi==2021.5.30
+    # via requests
+chardet==4.0.0
+    # via requests
+decorator==4.4.2
+    # via moviepy
 ffpyplayer==4.3.2
     # via -r requirements.in
+idna==2.10
+    # via requests
+imageio-ffmpeg==0.4.4
+    # via moviepy
+imageio==2.9.0
+    # via moviepy
+moviepy==1.0.3
+    # via -r requirements.in
 numpy==1.20.3
-    # via opencv-python
+    # via
+    #   imageio
+    #   moviepy
+    #   opencv-python
 opencv-python==4.5.2.54
+    # via -r requirements.in
+pillow==8.2.0
+    # via imageio
+proglog==0.1.9
+    # via moviepy
+pydub==0.25.1
     # via -r requirements.in
 pyzbar==0.1.8
     # via -r requirements.in
+requests==2.25.1
+    # via moviepy
+simpleaudio==1.0.4
+    # via -r requirements.in
+tqdm==4.61.1
+    # via
+    #   moviepy
+    #   proglog
+urllib3==1.26.5
+    # via requests
