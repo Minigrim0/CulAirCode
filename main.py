@@ -49,7 +49,9 @@ while True:
 
     if not mediaModel.mediaLoaded():
         cv2.imshow('frame', blackground)
-    cv2.waitKey(1)
+
+    if cv2.waitKey(10) & 0xFF == ord('q'):
+        break
 
 cap.release()
 cv2.destroyAllWindows()
