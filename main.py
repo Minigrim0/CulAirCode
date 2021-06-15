@@ -47,7 +47,6 @@ while True:
     elif QRLost and time.time() - time_since_lost > 1.5:
         mediaModel.kill()
 
-    cv2.imshow("CAPT", frame)
     if not mediaModel.mediaLoaded():
         cv2.imshow('frame', blackground)
     cv2.waitKey(1)
