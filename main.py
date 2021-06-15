@@ -19,7 +19,7 @@ timeElapsed = 0
 time_since_lost = 0
 QRLost = True
 
-blackground = np.zeros((1080, 1920, 1), dtype = "uint8")
+blackground = np.zeros((1080, 1920, 1), dtype="uint8")
 
 
 while True:
@@ -29,6 +29,8 @@ while True:
         mediaModel.update(timeElapsed)
 
     ret, frame = cap.read()
+    if frame is None:
+        continue
     decoded = decode(frame)
 
     if len(decoded) > 0:
