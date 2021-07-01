@@ -20,18 +20,19 @@ time_since_lost = 0
 QRLost = True
 
 blackground = np.zeros((1080, 1920, 1), dtype="uint8")
+loadedNow = False
 
 
 while True:
-    timeElapsed = time.time() - startTime
-    startTime = time.time()
-    if mediaModel.mediaLoaded():
-        mediaModel.update(timeElapsed)
-
     ret, frame = cap.read()
     if frame is None:
         continue
     decoded = decode(frame)
+
+    if mediaModel.mediaLoaded() and not loadedNow:
+        mediaModel.update(timeElapsed)
+    if loadedNow:
+        loadedNow = False
 
     if len(decoded) > 0:
         QRLost = False
@@ -41,6 +42,7 @@ while True:
 
         if not mediaModel.isStillSame(folder):
             mediaModel.loadFolder(folder)
+            loadedNow = True
     elif mediaModel.mediaLoaded() and not QRLost:
         time_since_lost = time.time()
         QRLost = True
@@ -52,6 +54,10 @@ while True:
 
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break
+
+    timeElapsed = time.time() - startTime
+    startTime = time.time()
+
 
 cap.release()
 cv2.destroyAllWindows()
