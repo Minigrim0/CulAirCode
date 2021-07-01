@@ -14,12 +14,12 @@ class Video:
         self.current_frame = 0
         self.time = 0
 
+        self.player = MediaPlayer(self.path)
+
         self.back = np.zeros((1080, 1920, 3), np.uint8)
         self.back[:, :] = (0, 0, 0)
 
     def draw(self, timeElapsed):
-        if self.time == 0:
-            self.player = MediaPlayer(self.path)
         self.time += timeElapsed
         frame = cv2.resize(self.stream.get_frame(self.time), (608, 1080))
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
